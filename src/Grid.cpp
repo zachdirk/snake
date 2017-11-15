@@ -1,6 +1,7 @@
 #include <SDL.h>
 #include "Grid.h"
 #include <iostream>
+#include <stdlib.h>
 Grid::Grid(){
     mRows = 0;
     mCols = 0;
@@ -14,24 +15,23 @@ Grid::~Grid(){
     delete [] mArray;
 }
 
-void Grid::init(int x, int y, int cellSize, int gridLineSize){
-    mRows = x/cellSize;
-    mCols = y/cellSize;
+void Grid::init(int h, int w, int cellSize, int gridLineSize){
+    mRows = h/cellSize;
+    mCols = w/cellSize;
     mCellSize = cellSize;
     mGridLineSize = gridLineSize;
     mArray = new int*[mRows];
     for (int i = 0; i < mRows; i++){
        mArray[i] = new int[mCols];
        for (int j = 0; j < mCols; j++){
-           mArray[i][j] = j % 4;
+           mArray[i][j] = 0;
        }
     }
 }
 
 
 void Grid::draw(SDL_Renderer* renderer){
-    int w = mCellSize;
-    int h = mCellSize;
+    int h = mCellSize - 1, w = mCellSize - 1; //subtract one to make room for the grid line
     for (int i = 0; i < mRows; i++){
         int y = i*mCellSize;
         for (int j = 0; j < mCols; j++){
@@ -73,7 +73,7 @@ int Grid::at(int x, int y){
     return(mArray[x][y]);
 }
 
-int Grid::set(int x, int y, int val){
-    mArray[x][y] = val;
-    return(mArray[x][y]);
+void Grid::set(int col, int row, int val){
+    mArray[row][col] = val;
 }
+

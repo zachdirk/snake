@@ -8,9 +8,11 @@ class Grid {
         Grid();
         ~Grid();
 
-        void init(int x, int y, int cellSize, int gridLineSize);
-        int at(int x, int y);
-        int set(int x, int y, int val);
+        void init(int h, int w, int cellSize, int gridLineSize);
+        int getCols(){return mCols;}
+        int getRows(){return mRows;}
+        int at(int col, int row);
+        void set(int col, int row, int val);
         void draw(SDL_Renderer* renderer);
         enum GridType{
             EMPTY,
