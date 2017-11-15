@@ -8,16 +8,19 @@ BUILD=build
 TARGET=bin/Snake.exe
 CLARGS=/EHsc /c $(INCLUDES) /Fo.\$(BUILD)\\
 LKARGS=/OUT:$(TARGET) /SUBSYSTEM:CONSOLE
-OBJECTS=$(BUILD)/main.obj $(BUILD)/SnakeGame.obj
+OBJECTS=$(BUILD)/main.obj $(BUILD)/SnakeGame.obj $(BUILD)/Grid.obj
 
 ALL: $(OBJECTS)
 	$(LINKER) $(LIBS) $(OBJECTS) $(LKARGS) 
 
-$(BUILD)/main.obj: $(SRC)/main.cpp $(BUILD)/SnakeGame.obj
+$(BUILD)/main.obj: $(BUILD)/SnakeGame.obj $(INCLUDEDIR)/SnakeGame.h $(BUILD)/Grid.obj $(SRC)/main.cpp 
 	$(COMPILER) $(CLARGS) $(SRC)/main.cpp 
 
-$(BUILD)/SnakeGame.obj: $(SRC)/SnakeGame.cpp $(INCLUDEDIR)/SnakeGame.h
+$(BUILD)/SnakeGame.obj: $(BUILD)/Grid.obj $(INCLUDEDIR)/Grid.h $(SRC)/SnakeGame.cpp 
 	$(COMPILER) $(CLARGS) $(SRC)/SnakeGame.cpp
+
+$(BUILD)/Grid.obj: $(SRC)/Grid.cpp
+	$(COMPILER) $(CLARGS) $(SRC)/Grid.cpp
 
 CLEAN:
 	del /Q bin\*

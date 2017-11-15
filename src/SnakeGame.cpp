@@ -1,7 +1,11 @@
 #include <SDL.h>
 #include <iostream>
 #include "SnakeGame.h"
-SnakeGame::SnakeGame(){}
+#include "Grid.h"
+
+SnakeGame::SnakeGame(){
+    mGrid.init(mSCREEN_HEIGHT, mSCREEN_WIDTH, 20, 1);
+}
 
 bool SnakeGame::init(){
     //try and initialize SDL
@@ -23,10 +27,9 @@ bool SnakeGame::init(){
     }
     //set the inital render color to white
     SDL_SetRenderDrawColor(mRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+    SDL_RenderClear(mRenderer);
     return(true);
 }
-
-
 
 bool SnakeGame::run(){
     bool quit = false;
@@ -37,6 +40,9 @@ bool SnakeGame::run(){
                 quit = true;
             }
         }
+        mGrid.draw(mRenderer);
+        SDL_RenderPresent(mRenderer);
     }
     return(true);
+
 }
