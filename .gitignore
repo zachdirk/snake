@@ -1,4 +1,4 @@
-obj/
+build/
 .vscode/
 bin/*.lib
 bin/*.exp
