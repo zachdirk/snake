@@ -33,19 +33,19 @@ bool SnakeGame::pause(bool quit){
 }
 
 void SnakeGame::spawnSnake(){
-    mSnake.init(mStartingCol, mStartingRow);
+    mSnake.init(mStartingCol, mStartingRow, &mGrid);
 }
 
 void SnakeGame::spawnFruit(){
-    bool set = true;
+    bool spawned = false;
     int col;
     int row;
-    while (set) {
+    while (!spawned) {
         col = rand() % mGrid.getCols();
         row = rand() % mGrid.getRows();
         if (mGrid.at(col, row) == Grid::EMPTY){
             mGrid.set(col, row, Grid::FRUIT);
-            set = false;
+            spawned = true;
         }
     }
 }
@@ -81,21 +81,6 @@ bool SnakeGame::run(){
     spawnSnake();
     spawnFruit();
     while (!quit){
-        while (SDL_PollEvent(&e) != 0){
-            if (e.type == SDL_QUIT){
-                quit = true;
-            } 
-            else if (e.type == SDL_KEYDOWN){
-                switch(e.key.keysym.sym){
-                    case SDLK_SPACE:
-                        quit = pause(quit);
-                        break;
-                    case SDLK_ESCAPE:
-                        restart();
-                        break;
-                }
-            }
-        }
         const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
         //we check what keys are held down, then assign a new direction based on that. 
         //we also check to make sure that the snake isn't trying to go the polar opposite direction
@@ -148,6 +133,21 @@ bool SnakeGame::run(){
         }
         mGrid.draw(mRenderer);
         SDL_RenderPresent(mRenderer);
+        while (SDL_PollEvent(&e) != 0){
+            if (e.type == SDL_QUIT){
+                quit = true;
+            } 
+            else if (e.type == SDL_KEYDOWN){
+                switch(e.key.keysym.sym){
+                    case SDLK_SPACE:
+                        quit = pause(quit);
+                        break;
+                    case SDLK_ESCAPE:
+                        restart();
+                        break;
+                }
+            }
+        }
         SDL_Delay(75);
     }
     return(true);
@@ -209,8 +209,9 @@ int SnakeGame::moveSnake(){
 
 void SnakeGame::restart(){
     //clean
-    mSnake.reset(mStartingCol, mStartingRow, Snake::RIGHT);
     mGrid.clear();
+    mSnake.reset(mStartingCol, mStartingRow, Snake::RIGHT);
+    mGrid.set(mStartingCol, mStartingRow, Grid::SNAKEHEAD);
     spawnFruit();
 }
 

@@ -37,9 +37,10 @@ void Snake::move(int col, int row){
     }
 }
 
-void Snake::init(int col, int row){
+void Snake::init(int col, int row, Grid* grid){
     mD = Snake::RIGHT;
     mHead.init(col, row);
+    grid->set(col, row, Grid::SNAKEHEAD);
 }
 
 void SnakeBody::setPrev(SnakeBody* body){

@@ -36,7 +36,7 @@ class Snake{
         SnakeBody getHead(){return mHead;}
         SnakeBody getTail(){return mTail;}
         void setDirection(DIRECTION d){mD = d;}
-        void init(int col, int row);
+        void init(int col, int row, Grid* grid);
         void move(int col, int row);
         void grow();
         void draw(Grid* grid);
