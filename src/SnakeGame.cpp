@@ -1,11 +1,13 @@
 #include <SDL.h>
 #include <iostream>
-#include "SnakeGame.h"
 #include "Grid.h"
 #include "Snake.h"
+#include "SnakeGame.h"
 
 SnakeGame::SnakeGame(){
     mGrid.init(mSCREEN_HEIGHT, mSCREEN_WIDTH, 20, 1);
+    mStartingCol = mGrid.getCols()/2;
+    mStartingRow = mGrid.getRows()/2;
 }
 
 bool SnakeGame::pause(bool quit){
@@ -29,10 +31,7 @@ bool SnakeGame::pause(bool quit){
 }
 
 void SnakeGame::spawnSnake(){
-    int row = mGrid.getRows()/2;
-    int col = mGrid.getCols()/2;
-    mGrid.set(col, row, Grid::SNAKEHEAD);
-    mSnake.init(col, row);
+    mSnake.init(mStartingCol, mStartingRow);
 }
 
 void SnakeGame::spawnFruit(){
@@ -70,6 +69,7 @@ bool SnakeGame::init(){
     //set the inital render color to white
     SDL_SetRenderDrawColor(mRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
     SDL_RenderClear(mRenderer);
+    
     return(true);
 }
 
@@ -87,6 +87,9 @@ bool SnakeGame::run(){
                 switch(e.key.keysym.sym){
                     case SDLK_SPACE:
                         quit = pause(quit);
+                        break;
+                    case SDLK_ESCAPE:
+                        restart();
                         break;
                 }
             }
@@ -120,19 +123,25 @@ bool SnakeGame::run(){
             if (mSnake.getDirection() != Snake::DOWN)
                 mSnake.setDirection(Snake::UP);
         }
-
-        std::cout << mSnake.getHead().getCol() << ", " << mSnake.getHead().getRow() << std::endl;
         int type = moveSnake();
         switch(type){
             case Grid::FRUIT:
-            //make snake longer
-            spawnFruit();
+                mSnake.grow();
+                //need to draw before we spawn the fruit or else it could spawn the fruit where we are going to add the tail
+                mSnake.draw(&mGrid); 
+                spawnFruit();
+                break;
+            case Grid::EMPTY:
+                mSnake.draw(&mGrid);
+            break;
+            case Grid::SNAKEHEAD:
+            case Grid::SNAKEBODY:
+            //lose 
             break;
             default:
             //this should not happen
             break;
         }
-        std::cout << mSnake.getHead().getCol() << ", " << mSnake.getHead().getRow() << std::endl;
         mGrid.draw(mRenderer);
         SDL_RenderPresent(mRenderer);
         SDL_Delay(75);
@@ -191,6 +200,13 @@ int SnakeGame::moveSnake(){
         row = 0;
     mSnake.move(col, row);
     int t = mGrid.at(col, row);
-    mGrid.set(col, row, Grid::SNAKEHEAD);
     return t;
+}
+
+void SnakeGame::restart(){
+    //clean
+    mSnake.destroy();
+    mGrid.clear();
+
+    spawnFruit();
 }

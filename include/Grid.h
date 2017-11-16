@@ -8,7 +8,7 @@ class Grid {
         enum GridType{
             EMPTY,
             SNAKEHEAD,
-            SNAKETAIL,
+            SNAKEBODY,
             FRUIT
         };
 
@@ -18,6 +18,7 @@ class Grid {
         int getCols(){return mCols;}
         int getRows(){return mRows;}
         int at(int col, int row);
+        void clear();
         void set(int col, int row, int val);
         void draw(SDL_Renderer* renderer);
         

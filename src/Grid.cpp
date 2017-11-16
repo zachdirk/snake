@@ -45,7 +45,7 @@ void Grid::draw(SDL_Renderer* renderer){
                 case SNAKEHEAD:
                     SDL_SetRenderDrawColor(renderer, 0x59, 0x98, 0x2F, 0xFF);
                 break;
-                case SNAKETAIL:
+                case SNAKEBODY:
                     SDL_SetRenderDrawColor(renderer, 0x33, 0x5E, 0x17, 0xFF);
                 break;
                 case FRUIT:
@@ -77,3 +77,10 @@ void Grid::set(int col, int row, int val){
     mArray[row][col] = val;
 }
 
+void Grid::clear(){
+    for (int i = 0; i < mRows; i++){
+        for (int j = 0; j < mCols; j++){
+            mArray[i][j] = EMPTY;
+        }
+    }
+}
