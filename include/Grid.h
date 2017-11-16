@@ -5,21 +5,22 @@
 class Grid {
 
     public:
-        Grid();
-        ~Grid();
-
-        void init(int h, int w, int cellSize, int gridLineSize);
-        int getCols(){return mCols;}
-        int getRows(){return mRows;}
-        int at(int col, int row);
-        void set(int col, int row, int val);
-        void draw(SDL_Renderer* renderer);
         enum GridType{
             EMPTY,
             SNAKEHEAD,
             SNAKETAIL,
             FRUIT
         };
+
+        Grid();
+        ~Grid();
+        void init(int h, int w, int cellSize, int gridLineSize);
+        int getCols(){return mCols;}
+        int getRows(){return mRows;}
+        int at(int col, int row);
+        void set(int col, int row, int val);
+        void draw(SDL_Renderer* renderer);
+        
     private:
         int** mArray;
         int mRows;

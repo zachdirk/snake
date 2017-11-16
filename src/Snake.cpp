@@ -13,6 +13,6 @@ void Snake::move(int col, int row){
 }
 
 void Snake::init(int col, int row){
-    mD = RIGHT;
+    mD = Snake::RIGHT;
     mHead.init(col, row);
 }

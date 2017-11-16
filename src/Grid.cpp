@@ -2,6 +2,7 @@
 #include "Grid.h"
 #include <iostream>
 #include <stdlib.h>
+
 Grid::Grid(){
     mRows = 0;
     mCols = 0;
@@ -66,11 +67,10 @@ void Grid::draw(SDL_Renderer* renderer){
     for (int i = 0; i <= mCols; i++){
         SDL_RenderDrawLine(renderer, (i*mCellSize-1), 0, (i*mCellSize-1), mRows*mCellSize);
     }
-    
 }
 
-int Grid::at(int x, int y){
-    return(mArray[x][y]);
+int Grid::at(int col, int row){
+    return(mArray[row][col]);
 }
 
 void Grid::set(int col, int row, int val){

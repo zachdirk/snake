@@ -32,9 +32,13 @@ class Snake{
     public:
         enum DIRECTION {
             UP,
+            UPRIGHT,
             RIGHT,
+            DOWNRIGHT,
             DOWN,
-            LEFT
+            DOWNLEFT,
+            LEFT,
+            UPLEFT
         };
         DIRECTION getDirection(){return mD;}
         SnakeHead getHead(){return mHead;}
