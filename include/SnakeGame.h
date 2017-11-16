@@ -14,6 +14,7 @@ class SnakeGame{
         void spawnFruit();
         void spawnSnake();
         void restart();
+        bool lose(bool quit);
         int moveSnake();
     private:
         const int mSCREEN_WIDTH = 640; // 640/20 = 32 grid cells

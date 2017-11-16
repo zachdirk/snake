@@ -136,6 +136,8 @@ bool SnakeGame::run(){
             break;
             case Grid::SNAKEHEAD:
             case Grid::SNAKEBODY:
+                mSnake.draw(&mGrid);
+                lose(quit);
             //lose 
             break;
             default:
@@ -207,6 +209,26 @@ void SnakeGame::restart(){
     //clean
     mSnake.destroy();
     mGrid.clear();
-
     spawnFruit();
+}
+
+bool SnakeGame::lose(bool quit){
+    SDL_Event e;
+    bool paused = true;
+    while (paused && !quit){
+        while (SDL_PollEvent(&e) != 0){
+            if (e.type == SDL_QUIT){
+                quit = true;
+            } 
+            else if (e.type == SDL_KEYDOWN){
+                switch(e.key.keysym.sym){
+                    case SDLK_ESCAPE:
+                        paused = false;
+                        break;
+                }
+            }
+        }
+    }
+    restart();
+    return(quit);
 }

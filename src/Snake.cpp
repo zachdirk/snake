@@ -47,7 +47,6 @@ void SnakeBody::setPrev(SnakeBody* body){
 }
 
 void Snake::grow(){
-    std::cout << "Growing" << std::endl;
     SnakeBody* body = &mHead;
     int i = 1;
     while(body->getPrev() != NULL){
