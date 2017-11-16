@@ -9,6 +9,7 @@ class SnakeGame{
         bool init();
         bool run();
         void quit();
+        bool pause(bool quit);
         void spawnFruit();
         void spawnSnake();
         int moveSnake();

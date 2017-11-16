@@ -8,6 +8,26 @@ SnakeGame::SnakeGame(){
     mGrid.init(mSCREEN_HEIGHT, mSCREEN_WIDTH, 20, 1);
 }
 
+bool SnakeGame::pause(bool quit){
+    SDL_Event e;
+    bool paused = true;
+    while (paused && !quit){
+        while (SDL_PollEvent(&e) != 0){
+            if (e.type == SDL_QUIT){
+                quit = true;
+            } 
+            else if (e.type == SDL_KEYDOWN){
+                switch(e.key.keysym.sym){
+                    case SDLK_SPACE:
+                        paused = false;
+                        break;
+                }
+            }
+        }
+    }
+    return(quit);
+}
+
 void SnakeGame::spawnSnake(){
     int row = mGrid.getRows()/2;
     int col = mGrid.getCols()/2;
@@ -63,27 +83,18 @@ bool SnakeGame::run(){
             if (e.type == SDL_QUIT){
                 quit = true;
             } 
-            /*else if (e.type == SDL_KEYDOWN){
+            else if (e.type == SDL_KEYDOWN){
                 switch(e.key.keysym.sym){
-                    case SDLK_UP:
-                        mSnake.setDirection(Snake::UP);
-                        break;
-                    case SDLK_DOWN:
-                        mSnake.setDirection(Snake::DOWN);
-                        break;
-                    case SDLK_RIGHT:
-                        mSnake.setDirection(Snake::RIGHT);
-                        break;
-                    case SDLK_LEFT:
-                        mSnake.setDirection(Snake::LEFT);
-                        break;
-                    default:
-                        //do nothing
+                    case SDLK_SPACE:
+                        quit = pause(quit);
                         break;
                 }
-            }*/
+            }
         }
         const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
+        //we check what keys are held down, then assign a new direction based on that. 
+        //we also check to make sure that the snake isn't trying to go the polar opposite direction
+        //because that's where its tail would be and that just feels crappy to die that way
         if (currentKeyStates[SDL_SCANCODE_UP] && currentKeyStates[SDL_SCANCODE_RIGHT]){
             if (mSnake.getDirection() != Snake::DOWNLEFT)
                 mSnake.setDirection(Snake::UPRIGHT);
