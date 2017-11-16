@@ -4,8 +4,10 @@
 #include "Snake.h"
 #include "SnakeGame.h"
 
-SnakeGame::SnakeGame(){
-    mGrid.init(mSCREEN_HEIGHT, mSCREEN_WIDTH, 20, 1);
+SnakeGame::SnakeGame(int rows, int cols, int cellSize){
+    mSCREEN_HEIGHT = rows * cellSize;
+    mSCREEN_WIDTH = cols * cellSize;
+    mGrid.init(mSCREEN_HEIGHT, mSCREEN_WIDTH, cellSize, 1);
     mStartingCol = mGrid.getCols()/2;
     mStartingRow = mGrid.getRows()/2;
 }
@@ -207,7 +209,7 @@ int SnakeGame::moveSnake(){
 
 void SnakeGame::restart(){
     //clean
-    mSnake.destroy();
+    mSnake.reset(mStartingCol, mStartingRow, Snake::RIGHT);
     mGrid.clear();
     spawnFruit();
 }

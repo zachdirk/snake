@@ -77,7 +77,7 @@ void Snake::draw(Grid* grid){
         grid->set(col, row, Grid::EMPTY);
 }
 
-void Snake::destroy(){
+void Snake::reset(int startingCol, int startingRow, DIRECTION d){
     SnakeBody* body = mHead.getPrev();
     SnakeBody* next;
     while (body != NULL){
@@ -86,4 +86,7 @@ void Snake::destroy(){
         body = next;
     }
     mHead.setPrev(NULL);
+    mHead.setCol(startingCol);
+    mHead.setRow(startingRow);
+    setDirection(d);
 }

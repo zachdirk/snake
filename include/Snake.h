@@ -40,7 +40,7 @@ class Snake{
         void move(int col, int row);
         void grow();
         void draw(Grid* grid);
-        void destroy();
+        void reset(int startingCol, int startingRow, DIRECTION d);
     private:
         DIRECTION mD;
         SnakeBody mHead;

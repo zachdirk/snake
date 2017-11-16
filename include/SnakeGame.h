@@ -6,7 +6,7 @@
 
 class SnakeGame{
     public:
-        SnakeGame();
+        SnakeGame(int rows, int cols, int cellSize);
         bool init();
         bool run();
         void quit();
@@ -17,8 +17,8 @@ class SnakeGame{
         bool lose(bool quit);
         int moveSnake();
     private:
-        const int mSCREEN_WIDTH = 640; // 640/20 = 32 grid cells
-        const int mSCREEN_HEIGHT = 480; // 480/20 = 24 grid cells
+        int mSCREEN_WIDTH;
+        int mSCREEN_HEIGHT;
         int mStartingCol;
         int mStartingRow;
         Snake mSnake;
