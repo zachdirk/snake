@@ -1,7 +1,7 @@
 #include "Snake.h"
 #include <stdlib.h>
 
-void SnakeHead::init(int col, int row){
+void SnakeBody::init(int col, int row){
     mPrev = NULL;
     mCol = col;
     mRow = row;
@@ -16,3 +16,11 @@ void Snake::init(int col, int row){
     mD = Snake::RIGHT;
     mHead.init(col, row);
 }
+/*
+void Snake::grow(){
+    SnakeTail* body = mHead.getPrev();
+    while(body->getPrev() != NULL){
+        body = body->getPrev();
+    }
+
+}*/
