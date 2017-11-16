@@ -139,7 +139,7 @@ bool SnakeGame::run(){
             case Grid::SNAKEHEAD:
             case Grid::SNAKEBODY:
                 mSnake.draw(&mGrid);
-                lose(quit);
+                quit = lose(quit);
             //lose 
             break;
             default:
