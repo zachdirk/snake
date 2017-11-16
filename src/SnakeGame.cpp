@@ -158,8 +158,8 @@ int SnakeGame::moveSnake(){
     int col = mSnake.getHead().getCol();
     int row = mSnake.getHead().getRow();
     mGrid.set(col, row, Grid::EMPTY);
-    int rows = mGrid.getRows() - 1; //-1 because the array indexes from 0 to x-1 and not 1 to x
-    int cols = mGrid.getCols() - 1; //-1 because the array indexes from 0 to x-1 and not 1 to x
+    int rows = mGrid.getRows() - 1; //-1 because the array indexes from 0 to mRows-1
+    int cols = mGrid.getCols() - 1; //-1 because the array indexes from 0 to mCols-1
     switch(mSnake.getDirection()){
         case Snake::UP:
             row = row - 1;

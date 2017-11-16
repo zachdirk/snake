@@ -18,4 +18,9 @@ Controls:
 
 Problems:
     -using a cell size less than 5 pixels wrecks the graphics
-    
+
+Things I would add if I had more time:
+    -win screen
+    -start menu with difficulties
+    -pause menu
+    -sounds
